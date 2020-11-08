@@ -112,28 +112,12 @@ In essence, the test program is this
 
 Other things worth noting:
 
-    - Discovery is done using [aiozeroconf](https://github.com/frawau/aiozeroconf)
+- Discovery is done using [aiozeroconf](https://github.com/frawau/aiozeroconf)
 
-    - Yeelights allows only about 1 command per second per connection. To counter that,
-      one can start more than one connection to a bulb. There is a limit of
-      4 connections per bulb, but given that there can only be 144 command per minute
-      per bulb, only 2 connections can be handled without starting to overload the bulb.
-      Use .set_connection(x) before activate to set the number of connections
+- Yeelights allows only about 1 command per second per connection. To counter that,one can start more than one connection to a bulb. There is a limit of 4 connections per bulb, but given that there can only be 144 command per minute per bulb, only 2 connections can be handled without starting to overload the bulb. Use .set_connection(x) before activate to set the number of connections
 
-    - aioyeelight ensure that there is at most 1 command per second per connection. To do so
-      it keeps a buffer of messages and pace the sending (using round-robin if there is more
-      then one connection). The buffer can thus become quite big. To control this, one can
-      specify a maximum buffer length and what to do with messages that comes when the buffer
-      is full. Use set_queue_limit(length,policy) to control.
-                length is the maximum number of commands waiting to be sent
-                policy defines what to do with the extra packets:
-                    drop: just drop them
-                    head: queue them but discard the head of the queue
-                    random: queue the message then discard a random element of the queue
-                    adapt: switch to the so-called "music mode" and dump all the messages.
-                           After 5 secs inactivity, the "music mode" is cancelled
+- aioyeelight ensure that there is at most 1 command per second per connection. To do so it keeps a buffer of messages and pace the sending (using round-robin if there is more then one connection). The buffer can thus become quite big.
 
-    - aioyeelight willl ping a bulb with a 'hello' message. This appears to be necessary for the bulb to keep responding.
+- aioyeelight will ping a bulb with a 'hello' message. This appears to be necessary for the bulb to keep responding.
 
-    - I only have "Color" model, so I could not test with other types
-      of bulbs
+- I only have "Color" model, so I could not test with other types of bulbs

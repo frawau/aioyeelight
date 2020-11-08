@@ -321,11 +321,15 @@ def main(args=None):
     except Exception as e:
         parser.error("Error: " + str(e))
 
-    opts.database = os.path.abspath(os.path.expanduser(opts.database))
-    with open(opts.database, "r") as tokendata:
-        tokenlist = json.load(tokendata)
-    for mac in tokenlist:
-        tokenlist[mac] = b64decode(tokenlist[mac])
+    try:
+        opts.database = os.path.abspath(os.path.expanduser(opts.database))
+        with open(opts.database, "r") as tokendata:
+            tokenlist = json.load(tokendata)
+        for mac in tokenlist:
+            tokenlist[mac] = b64decode(tokenlist[mac])
+    except:
+        logging.critical(f"I can't seem to be able to load keys from {opts.database}")
+        sys.exit(1)
 
     if opts.debug:
         logging.basicConfig(level=logging.DEBUG)

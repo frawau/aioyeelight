@@ -2,7 +2,7 @@
 
 aioxiaomi is a Python 3/asyncio library to control Xiaomi Yeelight LED lightbulbs over your LAN.
 
-[![PyPI version fury.io](https://badge.fury.io/py/aioyeelight.svg)](https://pypi.python.org/pypi/aioiotprov)
+[![PyPI version fury.io](https://badge.fury.io/py/aioyeelight.svg)](https://pypi.python.org/pypi/aioyeelight)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-licen)
 [![GITHUB-BADGE](https://github.com/frawau/aioyeelight/workflows/black/badge.svg)](https://github.com/psf/black)
 
@@ -18,7 +18,7 @@ or
 # Encryption Key
 
 THis library uses the MIHome binary protocol as described by [OpenMiHome](https://github.com/OpenMiHome/mihome-binary-protocol)
-This means you must acquire the envryption key that is generated during provisioning.
+This means you must acquire the encryption key that is generated during provisioning.
 
 The easiest way is to provision the bulbs with [aioiotprov](https://github.com/frawau/aioiotprov).
 
@@ -117,6 +117,8 @@ Other things worth noting:
 - Yeelights allows only about 1 command per second per connection. To counter that,one can start more than one connection to a bulb. There is a limit of 4 connections per bulb, but given that there can only be 144 command per minute per bulb, only 2 connections can be handled without starting to overload the bulb. Use .set_connection(x) before activate to set the number of connections
 
 - aioyeelight ensure that there is at most 1 command per second per connection. To do so it keeps a buffer of messages and pace the sending (using round-robin if there is more then one connection). The buffer can thus become quite big.
+
+- To send data with not limitation, you can start the music mode. In this case, the bulb will not send responses to commands. The music mode uses TCP and the commands are not encrypted.
 
 - aioyeelight will ping a bulb with a 'hello' message. This appears to be necessary for the bulb to keep responding.
 
